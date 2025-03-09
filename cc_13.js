@@ -12,12 +12,20 @@ function buildEmployee(name, position){                 //created a function for
     employeePosition.setAttribute("class", "employeeid");
     employeePosition.textContent = position;
 
+    //Task 4: Implementing Removal of Employee Cards with Event Bubbling
     const removeEmployee = document.createElement("button");
     removeEmployee.setAttribute("class", "employeeid")
     removeEmployee.textContent = "Remove Employee";
-    removeEmployee.addEventListener("click", function(){    //used addEventListener in a function that removes the employee when clicked
-        employee.remove()
+    removeEmployee.addEventListener("click", function(event){   //used addEventListener in a function that removes the employee when clicked
+        event.stopPropagation();                                //stopPropagation() prevents the event from bubbling up to the container
+        employeeContainer.removeChild(employee);                //removeChild removes parent employee card 
+        console.log(`Employee: ${name} was removed`);       //logged the message when an employee is removed
+    });
 
+
+    //click event when the anything else is clicked on the employee card 
+    document.getElementById("employeeContainer").addEventListener("click", function(event){     
+        console.log("You clicked an employee card")
     });
 
     //appended all the employee card elements (name, position, removeEmployee button)
@@ -26,7 +34,7 @@ function buildEmployee(name, position){                 //created a function for
     employee.appendChild(removeEmployee);
 
     document.getElementById("employeeContainer").appendChild(employee);     //appened the employee card yo the "employeeContainer" using appendChild
-}
+};
 
 
 //test data:
@@ -50,5 +58,6 @@ function employeeSelect(){
 
 }
 employeeSelect(); //logged the function to see changes to the card
+
 
 
