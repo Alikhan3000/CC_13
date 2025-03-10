@@ -22,6 +22,10 @@ function buildEmployee(name, position){                 //created a function for
         console.log(`Employee: ${name} was removed`);       //logged the message when an employee is removed
     });
 
+    employee.addEventListener("dblclick", function(){           //added a double-click event listener to each employee card
+        editEmployee(employee, employeeName, employeePosition);
+    });
+
 
     //click event when the anything else is clicked on the employee card 
     document.getElementById("employeeContainer").addEventListener("click", function(event){     
@@ -58,6 +62,45 @@ function employeeSelect(){
 
 }
 employeeSelect(); //logged the function to see changes to the card
+
+//Task 5: Inline Editing of Employee Details
+
+function editEmployee(employeeQSA, employeeName, employeePosition){
+    
+    const inputName = document.createElement("input");  //replaces static content with input fields
+    inputName.setAttribute("type", "text");
+    inputName.setAttribute("class", "input-name");
+    inputName.value = employeeName.textContent;
+
+    const inputPosition = document.createElement("input");
+    inputPosition.setAttribute("type", "text");
+    inputPosition.setAttribute("class", "input-position");
+    inputPosition.value = employeePosition.textContent;
+
+    employeeName.parentNode.replaceChild(inputName, employeeName);
+    employeePosition.parentNode.replaceChild(inputPosition, employeePosition);
+      
+    inputName.addEventListener("keypress", function(event){         //presses enter is pressed new data is saved 
+        if(event.key === "Enter"){
+            newinput();
+        }
+    })
+
+    inputPosition.addEventListener("keypress", function(event){
+        if(event.key === "Enter"){
+            newinput();
+        }
+    })
+
+    //function replaces and saves new inputs
+    function newinput(){                    
+        employeeName.textContent = inputName.value;
+        employeePosition.textContent = inputPosition.value;
+            
+            inputName.parentNode.replaceChild(employeeName, inputName);
+            inputPosition.parentNode.replaceChild(employeePosition, inputPosition);
+
+}}
 
 
 
